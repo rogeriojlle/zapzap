@@ -1,11 +1,21 @@
 import React from 'react';
-import { Hello } from './Hello.jsx';
-import { Info } from './Info.jsx';
+import { HeaderBar } from './Header';
+import { AppRoutes } from '../routes/main';
 
 export const App = () => (
-  <div>
-    <h1>Welcome to Meteor!</h1>
-    <Hello/>
-    <Info/>
+  <div
+    className="ui5-content-density-compact"
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+    }}
+  >
+    <HeaderBar />
+    <AppRoutes
+      style={{
+        flex: 1,
+      }}
+    />
   </div>
 );

@@ -1,39 +1,60 @@
-import React, { useState } from 'react';
-import { Accounts } from 'meteor/accounts-base';
+import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Redirect } from 'wouter';
 import { Hero } from './style';
+import { useTracker } from 'meteor/react-meteor-data';
 
-import { Input } from '@ui5/webcomponents-react';
+import { Button, Input } from '@ui5/webcomponents-react';
+import { useLocation } from 'wouter';
 
 export const Login = () => {
-  console.log(Accounts);
+  const [location, setLocation] = useLocation();
 
-  return Meteor.userId() ? (
-    'Logado'
+  console.log('location', location);
+
+  const { userId, user } = useTracker(() => {
+    return {
+      userId: Meteor.userId(),
+      user: Meteor.user(),
+    };
+  }, []);
+
+  const handleLogin = () => {
+    const { formLogin } = document.forms;
+    const { email, password } = formLogin.elements;
+    Meteor.loginWithPassword({ email: email.value }, password.value, err => {
+      if (err) throw err;
+      setLocation('/user/profile/');
+    });
+  };
+
+  return userId ? (
+    <Redirect to="/user/profile/" />
   ) : (
-    <form>
-      <Hero>
-        <ui5-label
-          class="samples-big-margin-right"
-          for="myInput"
-          required
-          show-colon
-        >
-          Name
+    <>
+      <Hero id="formLogin">
+        <ui5-label for="email" required show-colon>
+          email
         </ui5-label>
-        <Input id="myInput" placeholder="Enter your Name" required />
+        <Input
+          id="email"
+          name="email"
+          placeholder="email"
+          type="Email"
+          required
+        />
 
-        <ui5-label for="myPassword" required show-colon>
-          Secret Code
+        <ui5-label for="password" required show-colon>
+          senha
         </ui5-label>
         <ui5-input
-          id="myPassword"
-          type="Password"
-          value-state="Error"
-          placeholder="Enter your Secret Code"
+          id="password"
+          name="password"
+          placeholder="********"
           required
         ></ui5-input>
+        <Button onClick={handleLogin}>Enviar</Button>
       </Hero>
-    </form>
+    </>
   );
 };
