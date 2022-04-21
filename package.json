@@ -12,10 +12,12 @@
     "@ui5/webcomponents": "^1.2.4",
     "@ui5/webcomponents-fiori": "^1.2.4",
     "@ui5/webcomponents-react": "^0.22.7",
+    "ldapjs": "^2.3.2",
     "meteor-node-stubs": "^1.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "styled-components": "^5.3.5",
+    "whatsapp-web.js": "^1.16.5",
     "wouter": "^2.8.0-alpha.2"
   },
   "meteor": {

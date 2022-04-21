@@ -3,12 +3,11 @@ import { Meteor } from 'meteor/meteor';
 import { Redirect } from 'wouter';
 import { Hero } from './style';
 import { useTracker } from 'meteor/react-meteor-data';
-
 import { Button, Input } from '@ui5/webcomponents-react';
 import { useLocation } from 'wouter';
 
 export const Login = () => {
-  const [location, setLocation] = useLocation();
+  const [_, setLocation] = useLocation();
 
   const { userId } = useTracker(() => {
     return {
