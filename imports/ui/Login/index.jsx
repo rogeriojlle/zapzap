@@ -10,12 +10,9 @@ import { useLocation } from 'wouter';
 export const Login = () => {
   const [location, setLocation] = useLocation();
 
-  console.log('location', location);
-
-  const { userId, user } = useTracker(() => {
+  const { userId } = useTracker(() => {
     return {
       userId: Meteor.userId(),
-      user: Meteor.user(),
     };
   }, []);
 
@@ -24,12 +21,12 @@ export const Login = () => {
     const { email, password } = formLogin.elements;
     Meteor.loginWithPassword({ email: email.value }, password.value, err => {
       if (err) throw err;
-      setLocation('/user/profile/');
+      setLocation('/user/profile');
     });
   };
 
   return userId ? (
-    <Redirect to="/user/profile/" />
+    <Redirect to="/user/profile" />
   ) : (
     <>
       <Hero id="formLogin">
