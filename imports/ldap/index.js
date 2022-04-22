@@ -1,7 +1,10 @@
 import ldap from 'ldapjs';
+import { Meteor } from 'meteor/meteor';
+
+const { url, bind, base } = Meteor.settings.ldap;
 
 const client = ldap.createClient({
-  url: ['ldaps://sandbox.local'],
+  url,
   tlsOptions: {
     rejectUnauthorized: false,
   },
@@ -11,32 +14,38 @@ client.on('error', err => {
   console.log('err', err);
 });
 
-client.on('connect', () => {
-  console.log('connect');
-});
+export const clientBind = (authData = bind) => {
+  return new Promise((resolve, reject) => {
+    client.bind(...authData, (err, res) => {
+      if (err) return reject(err);
+      return resolve(res);
+    });
+  });
+};
 
-client.bind(
-  'CN=meteor app,OU=ApplicationsUsers,DC=sandbox,DC=local',
-  'meteor',
-  err => {
-    if (err) throw err;
+export const authenticate = async (sAMAccountName, pwd) => {
+  const auth = await searchUser(sAMAccountName);
+  if (auth) {
+    const authBind = await clientBind([auth.distinguishedName, pwd]);
+    authBind.unbind();
+    return authBind;
+  }
+};
 
+export const searchUser = sAMAccountName => {
+  return new Promise((resolve, reject) => {
     client.search(
-      'DC=sandbox,DC=local',
+      base,
       {
-        filter: '(sAMAccountName=Administrator)',
+        filter: `(sAMAccountName=${sAMAccountName})`,
         scope: 'sub',
+        paged: false,
       },
       (err, res) => {
-        if (err) throw err;
-        res.on('searchEntry', entry => {
-          console.log(entry);
-        });
+        if (err) return reject(err);
+        res.on('searchEntry', entry => resolve(entry.object));
+        res.on('end', result => resolve(result.object));
       }
     );
-  }
-);
-
-client.on('data', data => {
-  console.log('data', JSON.parse(data));
-});
+  });
+};

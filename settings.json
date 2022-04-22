@@ -1,0 +1,7 @@
+{
+  "ldap": {
+    "url": ["ldaps://sandbox.local"],
+    "base": "DC=sandbox,DC=local",
+    "bind": ["CN=meteor app,OU=ApplicationsUsers,DC=sandbox,DC=local","meteor"]
+  }
+}
