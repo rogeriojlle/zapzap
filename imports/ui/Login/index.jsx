@@ -5,6 +5,7 @@ import { Hero } from './style';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Button, Input } from '@ui5/webcomponents-react';
 import { useLocation } from 'wouter';
+import { loginUserWithLDAP } from '/imports/AccountsLdap/client';
 
 export const Login = () => {
   const [_, setLocation] = useLocation();
@@ -17,11 +18,23 @@ export const Login = () => {
 
   const handleLogin = () => {
     const { formLogin } = document.forms;
-    const { email, password } = formLogin.elements;
+    const { sAMAccountName, pw } = formLogin.elements;
+    const valueAccount = sAMAccountName.value.trim();
+    const valuePw = pw.value.trim();
+    if (!valueAccount || !valuePw) {
+      const error = new Meteor.Error(400, 'dados invalidos');
+      console.error(error);
+      return false;
+    }
+    loginUserWithLDAP(valueAccount, valuePw, (...args) => {
+      console.log(args);
+    });
+    /*
     Meteor.loginWithPassword({ email: email.value }, password.value, err => {
       if (err) throw err;
       setLocation('/user/profile');
     });
+    */
   };
 
   return userId ? (
@@ -29,24 +42,25 @@ export const Login = () => {
   ) : (
     <>
       <Hero id="formLogin">
-        <ui5-label for="email" required show-colon>
+        <ui5-label for="sAMAccountName" required show-colon>
           email
         </ui5-label>
         <Input
-          id="email"
-          name="email"
-          placeholder="email"
-          type="Email"
+          id="sAMAccountName"
+          name="sAMAccountName"
+          placeholder="sAMAccountName"
+          type="Text"
           required
         />
 
-        <ui5-label for="password" required show-colon>
+        <ui5-label for="pw" required show-colon>
           senha
         </ui5-label>
         <ui5-input
-          id="password"
-          name="password"
+          id="pw"
+          name="pw"
           placeholder="********"
+          type="Password"
           required
         ></ui5-input>
         <Button onClick={handleLogin}>Enviar</Button>

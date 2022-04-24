@@ -25,7 +25,6 @@ export const Register = () => {
 
   const handleForm = evt => {
     const { email, password } = document.forms.formRegistrar.elements;
-    console.log(Accounts);
     Accounts.createUser(
       {
         email: email.value,
