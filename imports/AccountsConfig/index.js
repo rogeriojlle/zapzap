@@ -1,9 +1,12 @@
+/*
 Accounts.validateLoginAttempt(
   ({ allowed, connection, methodArguments, methodName, type }) => {
-    if (type !== 'ldap') return false;
+    console.log({ allowed, connection, methodArguments, methodName, type });
     return false;
+    return type === 'ldap' && allowed === true;
   }
 );
+*/
 
 Accounts.validateNewUser(user => {
   console.log(user);

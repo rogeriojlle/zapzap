@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
+import '/imports/AccountsConfig';
 import '/imports/AccountsLdap/server';
 
 Meteor.startup(() => {});
