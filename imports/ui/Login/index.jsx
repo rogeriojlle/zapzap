@@ -26,15 +26,10 @@ export const Login = () => {
       console.error(error);
       return false;
     }
-    loginUserWithLDAP(valueAccount, valuePw, (...args) => {
-      console.log(args);
-    });
-    /*
-    Meteor.loginWithPassword({ email: email.value }, password.value, err => {
+    loginUserWithLDAP(valueAccount, valuePw, (err, res) => {
       if (err) throw err;
       setLocation('/user/profile');
     });
-    */
   };
 
   return userId ? (
