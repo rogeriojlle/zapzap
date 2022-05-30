@@ -10,6 +10,10 @@ Meteor.methods({
     console.log(this);
     return await checkLogin(sAMAccountName, pw);
   },
+  creatuser({ email, password }) {
+    console.log(Accounts);
+    return true;
+  },
 });
 
 Accounts.registerLoginHandler('ldap', function ({ ldap, sAMAccountName, pw }) {

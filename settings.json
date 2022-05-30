@@ -2,10 +2,10 @@
   "packages": {
     "service-configuration": {
       "ldap": {
-        "url": ["ldaps://sandbox.local"],
-        "baseDN": "DC=sandbox,DC=local",
+        "url": ["ldaps://sandbox.lan"],
+        "baseDN": "DC=sandbox,DC=lan",
         "scriptAuthData": {
-          "dn": "CN=meteor app,OU=ApplicationsUsers,DC=sandbox,DC=local",
+          "dn": "CN=meteor app,CN=Users,DC=sandbox,DC=lan",
           "pw": "meteor"
         }
       }

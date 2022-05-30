@@ -25,13 +25,16 @@ export const Register = () => {
 
   const handleForm = evt => {
     const { email, password } = document.forms.formRegistrar.elements;
-    Accounts.createUser(
+    console.log(Accounts);
+    Meteor.call(
+      'creatuser',
       {
         email: email.value,
         password: password.value,
       },
       err => {
         if (err) throw err;
+        console.log(Accounts);
       }
     );
   };
