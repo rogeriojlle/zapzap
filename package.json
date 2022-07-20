@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "start": "meteor --inspect -s settings.json run",
+    "start:zentyal": "meteor --inspect -s settings_zentyal.json run",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
     "visualize": "meteor --production --extra-packages bundle-visualizer"
@@ -12,11 +13,13 @@
     "@ui5/webcomponents": "^1.2.4",
     "@ui5/webcomponents-fiori": "^1.2.4",
     "@ui5/webcomponents-react": "^0.22.7",
+    "fibers": "^5.0.1",
     "ldapjs": "^2.3.2",
     "meteor-node-stubs": "^1.2.1",
     "qrcode": "^1.5.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "simpl-schema": "^1.12.2",
     "styled-components": "^5.3.5",
     "whatsapp-web.js": "^1.16.5",
     "wouter": "^2.8.0-alpha.2"

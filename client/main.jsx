@@ -7,6 +7,10 @@ import '@ui5/webcomponents/dist/Assets.js';
 import '@ui5/webcomponents-fiori/dist/Assets.js';
 import '@ui5/webcomponents-react/dist/Assets';
 
+Meteor.subscribe('eventos', function (/** @type {any} */ ...args) {
+  console.log(args);
+});
+
 Meteor.startup(() => {
   render(
     <React.StrictMode>

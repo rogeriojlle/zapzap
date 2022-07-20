@@ -1,0 +1,14 @@
+{
+  "packages": {
+    "service-configuration": {
+      "ldap": {
+        "url": ["ldaps://192.168.11.12"],
+        "baseDN": "DC=sandbox,DC=lan",
+        "scriptAuthData": {
+          "dn": "CN=meteor app,CN=Users,DC=sandbox,DC=lan",
+          "pw": "meteor"
+        }
+      }
+    }
+  }
+}

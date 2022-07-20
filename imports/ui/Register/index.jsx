@@ -23,7 +23,7 @@ export const Register = () => {
     };
   }, []);
 
-  const handleForm = evt => {
+  const handleForm = () => {
     const { email, password } = document.forms.formRegistrar.elements;
     console.log(Accounts);
     Meteor.call(

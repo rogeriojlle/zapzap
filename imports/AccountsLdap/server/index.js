@@ -1,4 +1,4 @@
-import { Accounts, AccountsServer } from 'meteor/accounts-base';
+import { Accounts } from 'meteor/accounts-base';
 import { init, checkLogin } from '/imports/ldap';
 import { Meteor } from 'meteor/meteor';
 const Future = require('fibers/future');
@@ -36,8 +36,15 @@ Accounts.registerLoginHandler('ldap', function ({ ldap, sAMAccountName, pw }) {
   var hashStampedToken = Accounts._hashStampedToken(stampedToken);
 
   Meteor.users.upsert(user.sAMAccountName, {
-    $set: { 'services.resume.loginTokens': [hashStampedToken] },
+    $set: {
+      'services.resume.loginTokens': [hashStampedToken],
+      'profile': {
+        displayName: user.displayName,
+      },
+    },
   });
+
+  console.log(user);
 
   return {
     userId: user.sAMAccountName,
